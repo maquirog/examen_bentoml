@@ -37,66 +37,66 @@ data = {
     "research": 0
 }
 
-# def test_1_1_JWT_missing_token():
-#     # Send a POST request to the prediction
-#     response = requests.post(
-#         predict_url,
-#         headers={
-#             "Content-Type": "application/json"
-#         },
-#         json=data
-#     )
-#     assert response.status_code == 401
+def test_1_1_JWT_missing_token():
+    # Send a POST request to the prediction
+    response = requests.post(
+        predict_url,
+        headers={
+            "Content-Type": "application/json"
+        },
+        json=data
+    )
+    assert response.status_code == 401
 
-# def test_1_1_JWT_invalid_token():
-#     # Send a POST request to the prediction
-#     token = "Fake token"
-#     response = requests.post(
-#         predict_url,
-#         headers={
-#             "Content-Type": "application/json",
-#             "Authorization": f"Bearer {token}"
-#         },
-#         json=data
-#     )
-#     assert response.status_code == 401
+def test_1_1_JWT_invalid_token():
+    # Send a POST request to the prediction
+    token = "Fake token"
+    response = requests.post(
+        predict_url,
+        headers={
+            "Content-Type": "application/json",
+            "Authorization": f"Bearer {token}"
+        },
+        json=data
+    )
+    assert response.status_code == 401
 
-# def test_1_2_JWT_expired_token():
-#     login_response = requests.post(
-#         login_url,
-#         headers={"Content-Type": "application/json"},
-#         json=credentials
-#     )
-#     # Send a POST request to the prediction
-#     token = login_response.json().get("token")
-#     time.sleep(10)
-#     response = requests.post(
-#         predict_url,
-#         headers={
-#             "Content-Type": "application/json",
-#             "Authorization": f"Bearer {token}"
-#         },
-#         json=data
-#     )
-#     assert response.status_code == 401
+def test_1_2_JWT_expired_token():
+    login_response = requests.post(
+        login_url,
+        headers={"Content-Type": "application/json"},
+        json=credentials
+    )
+    # Send a POST request to the prediction
+    token = login_response.json().get("token")
+    time.sleep(10)
+    response = requests.post(
+        predict_url,
+        headers={
+            "Content-Type": "application/json",
+            "Authorization": f"Bearer {token}"
+        },
+        json=data
+    )
+    assert response.status_code == 401
 
-# def test_1_3_JWT_valid_token():
-#     login_response = requests.post(
-#         login_url,
-#         headers={"Content-Type": "application/json"},
-#         json=credentials
-#     )
-#     # Send a POST request to the prediction
-#     token = login_response.json().get("token")
-#     response = requests.post(
-#         predict_url,
-#         headers={
-#             "Content-Type": "application/json",
-#             "Authorization": f"Bearer {token}"
-#         },
-#         json=data
-#     )
-#     assert response.status_code == 200
+def test_1_3_JWT_valid_token():
+    login_response = requests.post(
+        login_url,
+        headers={"Content-Type": "application/json"},
+        json=credentials
+    )
+    # Send a POST request to the prediction
+    token = login_response.json().get("token")
+    response = requests.post(
+        predict_url,
+        headers={
+            "Content-Type": "application/json",
+            "Authorization": f"Bearer {token}"
+        },
+        json=data
+    )
+    assert response.status_code == 200
 
 
 def test_2_1_login_correct_user_id():
@@ -119,26 +119,74 @@ def test_2_2_login_wrong_user_id():
         json=wrong_credentials
     )
     assert login_response.status_code is not 200
+    
+def test_3_1_Prediction_JWT_missing_token():
+    # Send a POST request to the prediction
+    response = requests.post(
+        predict_url,
+        headers={
+            "Content-Type": "application/json"
+        },
+        json=data
+    )
+    assert response.status_code == 401
 
-# # Check if the login was successful
-# if login_response.status_code == 200:
-#     token = login_response.json().get("token")
-#     # print("Token JWT obtenu:", token)
+def test_3_1_Prediction_JWT_invalid_token():
+    # Send a POST request to the prediction
+    token = "Fake token"
+    response = requests.post(
+        predict_url,
+        headers={
+            "Content-Type": "application/json",
+            "Authorization": f"Bearer {token}"
+        },
+        json=data
+    )
+    assert response.status_code == 401
 
+def test_3_2_Prediction_valid():
+    login_response = requests.post(
+        login_url,
+        headers={"Content-Type": "application/json"},
+        json=credentials
+    )
+    # Send a POST request to the prediction
+    token = login_response.json().get("token")
+    response = requests.post(
+        predict_url,
+        headers={
+            "Content-Type": "application/json",
+            "Authorization": f"Bearer {token}"
+        },
+        json=data
+    )
+    print(response.text)
+    assert response.status_code == 200
 
-#     # print("Wait 10 seconds to make the JWT token expire")
-#     # time.sleep(10)
-
-#     # Send a POST request to the prediction
-#     response = requests.post(
-#         predict_url,
-#         headers={
-#             "Content-Type": "application/json",
-#             "Authorization": f"Bearer {token}"
-#         },
-#         json=data
-#     )
-
-#     print("Réponse de l'API de prédiction:", response.text)
-# else:
-#     print("Erreur lors de la connexion:", login_response.text)
+def test_3_3_Prediction_invalid():
+    login_response = requests.post(
+        login_url,
+        headers={"Content-Type": "application/json"},
+        json=credentials
+    )
+    wrong_data = {
+        "gre": 300,
+        "toefl": 103,
+        "univ_ranking": 4,
+        "sop": 4,
+        "lor": 5,
+        "cgpa": 8.4,
+        "research": "Invalid"
+    }
+    # Send a POST request to the prediction
+    token = login_response.json().get("token")
+    response = requests.post(
+        predict_url,
+        headers={
+            "Content-Type": "application/json",
+            "Authorization": f"Bearer {token}"
+        },
+        json=wrong_data
+    )
+    print(response.text)
+    assert response.status_code == 400
