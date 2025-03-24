@@ -1,7 +1,18 @@
 import pandas as pd
 from sklearn.model_selection import train_test_split
+import wget
+import os
 
-df_admission = pd.read_csv("/home/ubuntu/examen_bentoml/data/raw/admission.csv")
+url = "https://assets-datascientest.s3.eu-west-1.amazonaws.com/MLOPS/bentoml/admission.csv"
+
+filename = "../data/raw/admission.csv"
+
+if os.path.exists(filename):
+    os.remove(filename) # if exist, remove it directly
+wget.download(url, out=filename)
+
+
+df_admission = pd.read_csv(filename)
 df_admission = df_admission.drop(columns=['Serial No.'])
 df_admission.columns = df_admission.columns.str.strip()
 
