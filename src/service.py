@@ -51,7 +51,7 @@ class InputModel(BaseModel):
 examen_bentoml_model_runner = bentoml.sklearn.get("examen_bentoml_model:latest").to_runner()
 
 # Create a service API
-examen_service = bentoml.Service("examen_bentoml_service", runners=[examen_bentoml_model_runner])
+examen_service = bentoml.Service("quiroga_examen_bentoml_service", runners=[examen_bentoml_model_runner])
 
 # Add the JWTAuthMiddleware to the service
 examen_service.add_asgi_middleware(JWTAuthMiddleware)
