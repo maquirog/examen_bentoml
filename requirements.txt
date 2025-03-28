@@ -1,0 +1,9 @@
+pandas
+numpy 
+pathlib 
+scikit-learn
+bentoml
+wget
+pytest
+requests
+pyjwt
