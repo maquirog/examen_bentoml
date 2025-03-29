@@ -1,6 +1,5 @@
 virtualenv venv
 source venv/bin/activate
-git clone https://github.com/maquirog/examen_bentoml.git
 cd examen_bentoml/
 pip3 install -r requirements.txt
 cd ../
