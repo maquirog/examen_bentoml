@@ -6,4 +6,5 @@ docker load --input bento_image.tar
 docker images
 docker run --rm -d -p 3000:3000 quiroga_examen_bentoml_service:gqln4xqmowjq766n
 cd examen_bentoml/src/
+sleep 5
 python3 -m pytest -o log_cli=1 -o log_cli_level=INFO test.py
