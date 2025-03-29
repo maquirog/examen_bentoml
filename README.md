@@ -1,28 +1,28 @@
 # Examen BentoML
 
-Ce repertoire contient l'architecture basique afin de rendre l'évaluation pour l'examen BentoML.
+Etapes à suivre :
 
-Vous êtes libres d'ajouter d'autres dossiers ou fichiers si vous jugez utile de le faire.
-
-Voici comment est construit le dossier de rendu de l'examen:
-
+1. Copy paste dans la racine (ou dossier X) du bento_image.tar
+2. Dans la racine (ou dossier X) cloner ce repo :
 ```bash       
-├── examen_bentoml          
-│   ├── data       
-│   │   ├── processed      
-│   │   └── raw           
-│   ├── models      
-│   ├── src       
-│   └── README.md
+git clone https://github.com/maquirog/examen_bentoml.git
 ```
+3. Entrez dans examen_bentoml/ :
+```bash       
+cd examen_bentoml/
+```
+4. Executez setup.sh avec la commande source :
+```bash       
+source setup.sh
+```
+C'est setup.sh qui execute pytest
+```bash       
+python3 -m pytest -o log_cli=1 -o log_cli_level=INFO test.py
+```
+Plus besoin de le faire directement
 
-Afin de pouvoir commencer le projet vous devez suivre les étapes suivantes:
+Voilà. Tout est bon. Rien d'autre à faire.
 
-- Forker le projet sur votre compte github
+Resultat attendu :
 
-- Cloner le projet sur votre machine
-
-- Récuperer le jeu de données à partir du lien suivant: [Lien de téléchargement]( https://datascientest.s3-eu-west-1.amazonaws.com/examen_bentoml/admissions.csv)
-
-
-Bon travail!
+![image](https://github.com/user-attachments/assets/5e4e5275-d27b-4924-a4eb-79424a3e73d3)
